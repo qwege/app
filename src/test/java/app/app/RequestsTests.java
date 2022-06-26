@@ -10,9 +10,6 @@ public class RequestsTests {
 
     @Test
     void testGetConnections(){
-        CategoryEntity categoryEntity = (CategoryEntity) WebRequest.setGetOne(CategoryEntity.class,WebRequest.GetCategoryByName+"Bluza");
-        assert categoryEntity!=null;
-        ProductEntity productEntity =  (ProductEntity) WebRequest.setGetOne(ProductEntity.class,WebRequest.GetProductByID+"1");
-        assert productEntity !=null;
+
     }
 }
