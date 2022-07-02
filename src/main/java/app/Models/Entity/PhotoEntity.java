@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "Photo")
 public class PhotoEntity {
     @Id
-    @SequenceGenerator(name = "PhotoSequence")
+    @SequenceGenerator(name = "PhotoSequence",sequenceName = "PhotoSequence")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PhotoSequence")
     int id_photo;
     @Column(name = "bytes", length = 16777215)
@@ -17,6 +17,31 @@ public class PhotoEntity {
     private ProductEntity productEntity;
     int Width;
     int Height;
+    int sortVal;
+
+    public ProductEntity getProductEntity() {
+        return productEntity;
+    }
+
+    public void setProductEntity(ProductEntity productEntity) {
+        this.productEntity = productEntity;
+    }
+
+    public int getId_photo() {
+        return id_photo;
+    }
+
+    public void setId_photo(int id_photo) {
+        this.id_photo = id_photo;
+    }
+
+    public int getSortVal() {
+        return sortVal;
+    }
+
+    public void setSortVal(int sortVal) {
+        this.sortVal = sortVal;
+    }
 
     public PhotoEntity(byte[] bytes) {
         this.bytes = bytes;

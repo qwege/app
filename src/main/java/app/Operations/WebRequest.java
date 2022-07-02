@@ -1,35 +1,32 @@
 package app.Operations;
 
 import app.Models.Category;
-import app.Models.Entity.CategoryEntity;
-import app.Models.Entity.ProductEntity;
 import app.Models.Product;
 import app.Models.REST.CategoryList;
 import app.Models.REST.ProductList;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.net.*;
 import java.util.List;
 
 public class WebRequest {
-    public static final String baseAdress="http://localhost:8080/";
-    public static final String SaveProduct = baseAdress+"product/save";
-    public static final String GetProductByID = baseAdress+"product/getById/";
-    public static final String GetCategoryByName = baseAdress+"cat/getByName/";
-    public static final String SaveCategory = baseAdress+"cat/update";
-    public static final String GetViewByID = baseAdress+"myView/getById/";
-    public static final String GetCategoryById = baseAdress+"cat/getById/";
-    public static final String GetProductsByCategoryId = baseAdress+"product/getByCatId/";
-    public static final String GetCategoryList = baseAdress+"cat/list";
-    public static final String GetProductsAll=baseAdress+"product/all";
+
+    public static final String baseAdress=getBaseAdress();
+    public static final String SaveProduct = baseAdress+"/product/save";
+    public static final String GetProductByID = baseAdress+"/product/getById/";
+    public static final String GetCategoryByName = baseAdress+"/cat/getByName/";
+    public static final String SaveCategory = baseAdress+"/cat/update";
+    public static final String GetViewByID = baseAdress+"/myView/getById/";
+    public static final String GetCategoryById = baseAdress+"/cat/getById/";
+    public static final String GetProductsByCategoryId = baseAdress+"/product/getByCatId/";
+    public static final String GetCategoryList = baseAdress+"/cat/list";
+    public static final String GetProductsAll=baseAdress+"/product/all";
+
+    private static String getBaseAdress(){
+        return  "http://localhost:8080";
+    }
 
     public static boolean setPOST(Product p, String url) {
         URL obj = null;

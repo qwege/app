@@ -5,10 +5,7 @@ import app.Models.Exception.ObjectDontFoundInDataBaseException;
 import app.Operations.WebRequest;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Product {
     private long id_product;
@@ -23,7 +20,7 @@ public class Product {
 
     private String groupDescription;
     private double cena;
-    private String opis;
+    private String nazwa;
 
     List<Dana> danas ;
 
@@ -36,6 +33,7 @@ public class Product {
     public Product() {
         setDanas(new ArrayList<>());
         setPhotos(new ArrayList<>());
+        nazwa="";
     }
 
     public long getId_product() {
@@ -54,12 +52,12 @@ public class Product {
         this.cena = cena;
     }
 
-    public String getOpis() {
-        return opis;
+    public String getNazwa() {
+        return nazwa;
     }
 
-    public void setOpis(String opis) {
-        this.opis = opis;
+    public void setNazwa(String nazwa) {
+        this.nazwa = nazwa;
     }
 
     public List<Dana> getDanas() {
@@ -97,7 +95,7 @@ public class Product {
     public ProductEntity toEntity(){
         ProductEntity productEntity =new ProductEntity();
         productEntity.setId(id_product);
-        productEntity.setOpis(opis);
+        productEntity.setNazwa(nazwa);
         productEntity.setCategory(((Category)WebRequest.setGetOne(Category.class,WebRequest.GetCategoryById+category_id)).toEntity());
         productEntity.setCena(cena);
         productEntity.setGroupDescrition(groupDescription);
@@ -120,7 +118,7 @@ public class Product {
       Product product= new Product();
         product.id_product=productEntity.getId();
         product.cena = productEntity.getCena();
-        product.opis=productEntity.getOpis();
+        product.nazwa=productEntity.getNazwa();
         product.groupDescription= product.getGroupDescription();
         product.category_id=productEntity.getCategory().getId();
         product.view_id=productEntity.getView().getId_view();
@@ -133,6 +131,13 @@ public class Product {
             product.danas.add(Dana.getInstance(danaEntity, (int) productEntity.getId()));
         }
         return product;
-    };
+    }
+    public void sortPhotos(){
+        Photo[] photosNew = new Photo[photos.size()];
+        for(Photo photo:photos){
+            photosNew[photo.getSortVal()]=photo;
+        }
+        photos= Arrays.stream(photosNew).toList();
+    }
 
 }

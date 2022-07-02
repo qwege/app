@@ -9,13 +9,13 @@ import java.util.Set;
 
 public class ProductEntity {
     @Id
-    @SequenceGenerator(name = "ProductSequence")
+    @SequenceGenerator(name = "ProductSequence",sequenceName = "ProductSequence" )
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ProductSequence")
     private long id_product;
     @Column(name = "Prize")
     private double cena;
-    @Column(name = "Description")
-    private String opis;
+    @Column(name = "Productname")
+    private String nazwa;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "productEntity", cascade = CascadeType.ALL,orphanRemoval = true)
     Set<DanaEntity> danaEntityList;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "productEntity", cascade = CascadeType.ALL,orphanRemoval = true)
@@ -77,7 +77,7 @@ public class ProductEntity {
 
     public ProductEntity(double cena, String opis) {
         this.cena = cena;
-        this.opis = opis;
+        this.nazwa = nazwa;
     }
 
     public long getId() {
@@ -96,12 +96,12 @@ public class ProductEntity {
         this.cena = cena;
     }
 
-    public String getOpis() {
-        return opis;
+    public String getNazwa() {
+        return nazwa;
     }
 
-    public void setOpis(String opis) {
-        this.opis = opis;
+    public void setNazwa(String opis) {
+        this.nazwa = opis;
     }
 
 

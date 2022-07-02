@@ -7,7 +7,7 @@ import java.util.Set;
 @Table(name = "Category")
 public class CategoryEntity {
     @Id
-    @SequenceGenerator(name = "CategorySequence")
+    @SequenceGenerator(name = "CategorySequence",sequenceName = "CategorySequence")
     @GeneratedValue (strategy =  GenerationType.SEQUENCE,generator = "CategorySequence")
     int id_category;
     String name;

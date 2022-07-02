@@ -73,6 +73,11 @@
             <artifactId>vaadin-board-flow</artifactId>
             <version>${vaadin.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>flow-server</artifactId>
+            <version>23.1.1</version>
+        </dependency>
 
     </dependencies>
     <dependencyManagement>

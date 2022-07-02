@@ -8,7 +8,7 @@ import java.util.Set;
 @Table(name = "widok")
 public class ViewEntity {
     @Id
-    @SequenceGenerator(name = "ViewSequence")
+    @SequenceGenerator(name = "ViewSequence",sequenceName = "ViewSequence")
     @GeneratedValue (strategy = GenerationType.SEQUENCE,generator = "ViewSequence")
     int id_view;
     @OneToMany(fetch = FetchType.LAZY ,mappedBy = "viewEntity")

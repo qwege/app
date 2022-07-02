@@ -1,24 +1,32 @@
 package app.Vadinn.SubPage;
 
 import app.Models.Product;
+import app.Operations.VaadinOperation;
 import app.Vadinn.SubPage.Compontent.ProductWindow;
+import com.vaadin.flow.component.ClickEvent;
+import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.server.VaadinSession;
 
+import java.util.ArrayList;
 import java.util.List;
 public class SelectProductPage extends VerticalLayout {
-    List<Product> productList;
+    List<ProductWindow> productWindowList;
     FormLayout formLayout;
     public SelectProductPage(List<Product> products){
-        productList=products;
-        updateProducts();
+        this.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
+        updateProducts(products);
 
     }
-    private void updateProducts(){
+    private void updateProducts(List<Product> products){
         try {
+            for(ProductWindow p : productWindowList)formLayout.remove(p);
             remove(formLayout);
         }catch (NullPointerException ignore){}
+        productWindowList=new ArrayList<>();
         formLayout= new FormLayout();
         formLayout.setWidthFull();
         add(formLayout);
@@ -29,8 +37,25 @@ public class SelectProductPage extends VerticalLayout {
                 new FormLayout.ResponsiveStep("400px", 3),
                 new FormLayout.ResponsiveStep("600px", 4),
                 new FormLayout.ResponsiveStep("800px", 5));
-        for(Product product:productList){
-            formLayout.add(new ProductWindow(product));
+        for(Product product:products){
+            ProductWindow productWindow = new ProductWindow(product);
+            productWindow.addClickListener(new ComponentEventListener<ClickEvent<FormLayout>>() {
+                @Override
+                public void onComponentEvent(ClickEvent<FormLayout> formLayoutClickEvent) {
+                    VaadinSession.getCurrent().setAttribute("currentProduct",((ProductWindow)formLayoutClickEvent.getSource()).getProduct());
+                    try {
+                        if (VaadinOperation.isAdminLogged())
+                            UI.getCurrent().getPage().setLocation("/Admin/EditProduct");
+                    } catch (Throwable e) {
+                        System.out.println("Client Product Page Not Implemented");
+                        UI.getCurrent().getPage().setLocation("/Product");
+                    }
+
+
+                }
+            });
+            formLayout.add(productWindow);
+            productWindowList.add(productWindow);
         }
 
     }

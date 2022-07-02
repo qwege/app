@@ -40,6 +40,8 @@ public class AddProductPage extends VerticalLayout {
     ComponentEventListener focusListener;
     Label[] metadatas;
     TextField[] datas;
+    TextField name;
+    AddProductPage ref =this;
 
 
     public AddProductPage() {
@@ -52,7 +54,7 @@ public class AddProductPage extends VerticalLayout {
                 save();
             }
         };
-
+        this.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
         comboBox = new ComboBox<>();
         comboBox.setItems(DataBase.getCategory());
         add(comboBox);
@@ -61,6 +63,7 @@ public class AddProductPage extends VerticalLayout {
             @Override
             public void onComponentEvent(ClickEvent<Button> buttonClickEvent) {
                 Cache.saveProduct(futureProduct);
+                ref=new AddProductPage();
             }
         });
         add(submit);
@@ -113,8 +116,7 @@ public class AddProductPage extends VerticalLayout {
             if (datas != null) {
                 futureProduct.setCena(Double.parseDouble(datas[0].getValue()));
                 datas[0].setErrorMessage("");
-
-
+                futureProduct.setNazwa(this.name.getValue());
                 List<Dana> danas = new ArrayList<>();
                 List<Dana> danaList = futureProduct.getDanas();
                 Object[] danalist = danaList.toArray();
@@ -141,9 +143,13 @@ public class AddProductPage extends VerticalLayout {
     private void updateProductInfo() {
         this.remove(productInfo);
         productInfo = new VerticalLayout();
+        productInfo.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
         add(productInfo);
-        Label name = new Label(futureProduct.getClass().getSimpleName());
+        Label name = new Label("Nazwa");
+        this.name= new TextField();
         productInfo.add(name);
+        productInfo.add(this.name);
+        this.name.setValue(futureProduct.getNazwa());
         HorizontalLayout[] horizontalLayouts = new HorizontalLayout[futureProduct.getDanas().size() + 1];
         metadatas = new Label[horizontalLayouts.length];
         datas = new TextField[horizontalLayouts.length];
@@ -185,7 +191,7 @@ public class AddProductPage extends VerticalLayout {
                 BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(bytes));
                 photo.setHeight( bufferedImage.getHeight());
                 photo.setWidth(bufferedImage.getWidth());
-
+                photo.setSortVal(futureProduct.getPhotos().size());
                 futureProduct.getPhotos().add(photo);
 
             } catch (FileNotFoundException fileNotFoundException) {

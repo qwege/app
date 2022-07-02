@@ -1,5 +1,6 @@
 package app.Vadinn;
 
+import app.Operations.VaadinOperation;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.UI;
@@ -28,7 +29,7 @@ public class LoginPage extends VerticalLayout {
             public void onComponentEvent(ClickEvent<Button> buttonClickEvent) {
                 if(loginField.getValue().equals("Ela")&& passwordField.getValue().equals("Ela"))
                 VaadinSession.getCurrent().setAttribute("auth","true");
-                UI.getCurrent().getPage().setLocation("http://localhost:8080/Admin");
+                UI.getCurrent().getPage().setLocation("/Admin");
             }
         });
 

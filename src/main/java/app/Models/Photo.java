@@ -8,6 +8,15 @@ public class Photo {
     int id_photo;
     byte[] bytes;
     int product_id;
+    int sortVal;
+
+    public int getSortVal() {
+        return sortVal;
+    }
+
+    public void setSortVal(int sortVal) {
+        this.sortVal = sortVal;
+    }
 
     public int getWidth() {
         return Width;
@@ -66,6 +75,7 @@ public class Photo {
         photoEntity.setProduct(product);
         photoEntity.setHeight(getHeight());
         photoEntity.setWidth(getWidth());
+        photoEntity.setSortVal(getSortVal());
         return photoEntity;
     }
 
@@ -76,7 +86,8 @@ public class Photo {
         photo.bytes = photoEntity.getBytes();
         photo.setProduct_id(product_id);
         photo.setHeight(photoEntity.getHeight());
-        photo.setWidth(photo.getWidth());
+        photo.setWidth(photoEntity.getWidth());
+        photo.setSortVal(photoEntity.getSortVal());
         return photo;
 
     }

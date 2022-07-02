@@ -1,6 +1,7 @@
 package app.Vadinn;
 
 import app.Operations.Cache;
+import app.Operations.VaadinOperation;
 import app.Vadinn.SubPage.Admin.AddProductPage;
 import app.Vadinn.SubPage.SelectProductPage;
 import com.vaadin.flow.component.ComponentEventListener;
@@ -21,11 +22,14 @@ public class AdminPage extends VerticalLayout {
 
     public AdminPage() {
         try {
-            if (!VaadinSession.getCurrent().getAttribute("auth").equals("true"))
-                UI.getCurrent().getPage().setLocation("http://localhost:8080/Login");
+            if (!VaadinOperation.isAdminLogged()){
+                UI.getCurrent().getPage().setLocation("/Login");
+            return;}
         } catch (Throwable e) {
-            UI.getCurrent().getPage().setLocation("http://localhost:8080/Login");
+                UI.getCurrent().getPage().setLocation("/Login");
+                return;
         }
+        this.setDefaultHorizontalComponentAlignment(Alignment.CENTER);
         tabs = new Tabs();
         Tab addProduct = new Tab("Dodaj Produkt");
         Tab edit = new Tab("Edycja");
@@ -49,8 +53,8 @@ public class AdminPage extends VerticalLayout {
 
 
         this.add(tabs);
-        content = new VerticalLayout();
-        this.add(content);
+        content =new SelectProductPage(Cache.getProductsAll());
+        add(content);
 
     }
 }
